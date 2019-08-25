@@ -154,9 +154,14 @@ def draw_marked_alternative(question_patch, index):
 def get_marked_alternative(alternative_patches):
     means = list(map(np.mean, alternative_patches))
     sorted_means = sorted(means)
+    
+    print(sorted_means[0]/sorted_means[1])
+    
+    for val in alternative_patches:
+        print(val)
 
     # Simple heuristic
-    if sorted_means[0]/sorted_means[1] > .7:
+    if sorted_means[0]/sorted_means[1] > .85:
         return None
 
     return np.argmin(means)
@@ -185,6 +190,8 @@ def get_answers(source_file):
     im = normalize(cv2.cvtColor(blurred, cv2.COLOR_BGR2GRAY))
 
     ret, im = cv2.threshold(im, 127, 255, cv2.THRESH_BINARY)
+    
+    cv2.imwrite("../test_images/b_th.png", im)
 
     contours = get_contours(im)
     corners = get_corners(contours)
