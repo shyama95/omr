@@ -160,11 +160,13 @@ def get_marked_alternative(alternative_patches):
     # print(means)
     # print(sorted_means[0]/sorted_means[1])
     
+    maximum = sorted_means[-1]
+
     # Eliminate no answers marked case
-    if sorted_means[0] > 200:
+    if sorted_means[0] > (0.8*maximum):
         return None
     # Eliminate double marking case
-    elif sorted_means[0] < 200 and sorted_means[1] < 200:
+    elif sorted_means[0] < (0.8*maximum) and sorted_means[1] < (0.8*maximum):
         return None
 
     return np.argmin(means)
